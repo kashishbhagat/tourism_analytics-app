@@ -1,0 +1,22 @@
+# Core data stack
+pandas>=2.0
+numpy>=1.24
+scipy>=1.10
+pyarrow>=12.0          # parquet engine for the processed master dataset
+
+# Modelling
+scikit-learn>=1.3
+xgboost>=2.0           # optional: skipped automatically if absent
+lightgbm>=4.0          # optional: skipped automatically if absent
+joblib>=1.3
+
+# Visualisation
+matplotlib>=3.7
+seaborn>=0.12
+
+# Application
+streamlit>=1.30
+
+# Raw file readers
+openpyxl>=3.1          # .xlsx
+xlrd>=2.0              # legacy .xls
