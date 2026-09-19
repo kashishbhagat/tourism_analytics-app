@@ -1,0 +1,517 @@
+{
+  "generated_at": "2026-09-18T21:54:36",
+  "cleaning": {
+    "steps": 16,
+    "rows": 38854,
+    "columns": 24
+  },
+  "eda": {
+    "transactions": 38854,
+    "users": 2996,
+    "attractions": 350,
+    "countries": 66,
+    "attraction_types": 15,
+    "mean_rating": 4.208,
+    "year_range": "2020-2024",
+    "findings": [
+      "Ratings are strongly left-skewed (skew = -0.73): 81.7% of all visits are rated 4 or 5, and the mean is 4.21. Satisfaction data is a censored, optimistic signal \u2014 models should be judged against a mean-prediction baseline, not against a naive 0-to-5 range.",
+      "**Couples** travellers are the most satisfied (mean 4.37) and **Business** the least (mean 3.88), a gap of 0.49 points. Visit mode is a real driver of satisfaction, not noise.",
+      "User demand is geographically concentrated: the top three continents (Asia, Europe, Africa) account for 74.0% of all visits, and **Norway** alone contributes 3.3%. Marketing spend and language support should follow this concentration rather than being spread evenly.",
+      "**Fix-first segment:** Ballets, Neighborhoods, Nature & Wildlife Areas draw above-median traffic but below-average satisfaction. These are the categories where service improvements return the most, because the audience already exists.",
+      "**Under-promoted segment:** Flea & Street Markets, Religious Sites, Ancient Ruins score above average on satisfaction but attract below-median traffic \u2014 strong candidates for promotion, since the experience already delivers.",
+      "The association between continent and visit mode is statistically significant but weak in magnitude (chi-square p = 1.26e-97, Cramer's V = 0.058). Geography alone does not determine how people travel, which sets a realistic ceiling on the visit-mode classifier and is why its accuracy should be read against the majority-class baseline.",
+      "Visit modes are imbalanced (Family is 3.0x more common than Solo), so the classifier is selected on macro F1 rather than accuracy \u2014 accuracy would reward ignoring the rare, commercially valuable segments.",
+      "Demand peaks in month 9 and bottoms out in month 5, a 1.12x swing. Staffing and dynamic pricing should be planned against this curve; the `Season` feature is included in both models for this reason.",
+      "Demand follows a long tail: the top 20% of attractions capture 53.4% of all visits. A recommender that only surfaces popular items will reinforce this concentration, which is why the hybrid model blends a content signal to keep the tail discoverable.",
+      "The user-item matrix is 97.2331% sparse with a median of 8 visits per user. This sparsity is the core constraint on collaborative filtering and the reason a content-based fallback is needed for cold-start users.",
+      "An attraction's historical mean rating correlates 0.55 with the rating an individual visit receives \u2014 by far the strongest single predictor, and confirmed as the top feature by permutation importance. Note this is computed here for exploration only; in the models it is recomputed on the training fold alone to avoid leaking the target."
+    ]
+  },
+  "data_quality": {
+    "status": "PASS",
+    "checks": [
+      {
+        "check_name": "ratings out of range",
+        "violations": 0
+      },
+      {
+        "check_name": "months out of range",
+        "violations": 0
+      },
+      {
+        "check_name": "null ratings",
+        "violations": 0
+      },
+      {
+        "check_name": "null visit modes",
+        "violations": 0
+      },
+      {
+        "check_name": "duplicate transactions",
+        "violations": 0
+      }
+    ]
+  },
+  "regression": {
+    "task": "regression",
+    "target": "Rating",
+    "best_model": "Ridge Regression",
+    "test_r2": 0.38397968344666067,
+    "test_rmse": 0.6297433751569117,
+    "test_mae": 0.4959169888619135,
+    "cv_r2_mean": 0.3926060376267905,
+    "cv_r2_std": 0.005114346742160554,
+    "n_train": 31083,
+    "n_test": 7771,
+    "comparison": [
+      {
+        "model": "Ridge Regression",
+        "r2": 0.38397968344666067,
+        "rmse": 0.6297433751569117,
+        "mae": 0.4959169888619135,
+        "train_seconds": 0.26
+      },
+      {
+        "model": "Gradient Boosting",
+        "r2": 0.35441129496325485,
+        "rmse": 0.6446797835641469,
+        "mae": 0.5121237448608121,
+        "train_seconds": 21.51
+      },
+      {
+        "model": "Random Forest",
+        "r2": 0.3212399184842446,
+        "rmse": 0.6610346673339232,
+        "mae": 0.509310207632126,
+        "train_seconds": 9.45
+      },
+      {
+        "model": "LightGBM",
+        "r2": 0.29357121623208293,
+        "rmse": 0.6743731690435278,
+        "mae": 0.5345141717053855,
+        "train_seconds": 2.22
+      },
+      {
+        "model": "XGBoost",
+        "r2": 0.2768469844646041,
+        "rmse": 0.6823091422735141,
+        "mae": 0.5339954975810755,
+        "train_seconds": 2.34
+      },
+      {
+        "model": "Baseline (mean)",
+        "r2": -0.0005117746579081928,
+        "rmse": 0.802559410900947,
+        "mae": 0.6619948400468809,
+        "train_seconds": 0.17
+      }
+    ],
+    "top_features": [
+      {
+        "feature": "AttractionAvgRating",
+        "importance": 0.5210899869690998,
+        "std": 0.005201357856531299
+      },
+      {
+        "feature": "UserAvgRating",
+        "importance": 0.07133820773333421,
+        "std": 0.004330694834859451
+      },
+      {
+        "feature": "UserAttractionTypeAffinity",
+        "importance": 0.019806888721929778,
+        "std": 0.0014398407770332118
+      },
+      {
+        "feature": "Season",
+        "importance": 0.004763244979492061,
+        "std": 0.0011526675148876419
+      },
+      {
+        "feature": "UserRatingStd",
+        "importance": 0.0031424160825372915,
+        "std": 0.00122703503061145
+      },
+      {
+        "feature": "AttractionTypeAvgRating",
+        "importance": 0.00214932600877471,
+        "std": 0.0004321347121423227
+      },
+      {
+        "feature": "AttractionType",
+        "importance": 0.0010949437383438825,
+        "std": 0.000605341115920899
+      },
+      {
+        "feature": "VisitMonth",
+        "importance": 0.001005965222358518,
+        "std": 0.0006802915952319341
+      },
+      {
+        "feature": "AttractionRatingStd",
+        "importance": 0.000978633299295965,
+        "std": 0.000440198438050329
+      },
+      {
+        "feature": "AttractionCity",
+        "importance": 0.0005912783271561824,
+        "std": 1.4785316579779944e-05
+      },
+      {
+        "feature": "CountryAvgRating",
+        "importance": 0.00017038810362527781,
+        "std": 0.0005945932381535601
+      },
+      {
+        "feature": "UserVisitCount",
+        "importance": 0.0001138610791582284,
+        "std": 0.00017002649715475
+      },
+      {
+        "feature": "Country",
+        "importance": 7.828581682286136e-05,
+        "std": 1.65596055512403e-05
+      },
+      {
+        "feature": "Attraction",
+        "importance": 6.88708236867841e-05,
+        "std": 1.3532783095702111e-05
+      },
+      {
+        "feature": "VisitYear",
+        "importance": 3.185805867630028e-05,
+        "std": 0.00010846753075703689
+      },
+      {
+        "feature": "MonthsSinceFirstVisit",
+        "importance": 1.6306343073220948e-06,
+        "std": 1.4610320795867801e-05
+      },
+      {
+        "feature": "Continent",
+        "importance": -3.171912073388997e-05,
+        "std": 0.00025567974733754594
+      },
+      {
+        "feature": "CityName",
+        "importance": -3.367087264286953e-05,
+        "std": 1.7370701611639177e-05
+      },
+      {
+        "feature": "AttractionVisitCount",
+        "importance": -3.44636137272758e-05,
+        "std": 9.79653906126582e-05
+      },
+      {
+        "feature": "Region",
+        "importance": -0.00016453175245774906,
+        "std": 8.721709974391171e-05
+      }
+    ],
+    "model_path": "C:\\Users\\lenovo\\Downloads\\files\\tourism_analytics\\tourism_analytics\\models\\rating_regressor.joblib"
+  },
+  "classification": {
+    "task": "classification",
+    "target": "VisitMode",
+    "best_model": "Random Forest",
+    "classes": [
+      "Business",
+      "Couples",
+      "Family",
+      "Friends",
+      "Solo"
+    ],
+    "test_accuracy": 0.27062154162913393,
+    "test_f1_macro": 0.24462498665236504,
+    "test_f1_weighted": 0.2587927342292563,
+    "cv_f1_macro_mean": 0.24020988480669772,
+    "cv_f1_macro_std": 0.004911102164380591,
+    "n_train": 31083,
+    "n_test": 7771,
+    "class_distribution": {
+      "Family": 0.2932,
+      "Couples": 0.2535,
+      "Friends": 0.2156,
+      "Business": 0.1404,
+      "Solo": 0.0973
+    },
+    "confusion_matrix": [
+      [
+        575,
+        200,
+        119,
+        112,
+        85
+      ],
+      [
+        417,
+        737,
+        329,
+        332,
+        155
+      ],
+      [
+        617,
+        647,
+        457,
+        334,
+        224
+      ],
+      [
+        440,
+        549,
+        285,
+        261,
+        140
+      ],
+      [
+        243,
+        205,
+        126,
+        109,
+        73
+      ]
+    ],
+    "per_class": {
+      "Business": {
+        "precision": 0.2509,
+        "recall": 0.527,
+        "f1": 0.3399,
+        "support": 1091
+      },
+      "Couples": {
+        "precision": 0.3152,
+        "recall": 0.3741,
+        "f1": 0.3422,
+        "support": 1970
+      },
+      "Family": {
+        "precision": 0.3473,
+        "recall": 0.2005,
+        "f1": 0.2542,
+        "support": 2279
+      },
+      "Friends": {
+        "precision": 0.2274,
+        "recall": 0.1558,
+        "f1": 0.1849,
+        "support": 1675
+      },
+      "Solo": {
+        "precision": 0.1078,
+        "recall": 0.0966,
+        "f1": 0.1019,
+        "support": 756
+      }
+    },
+    "comparison": [
+      {
+        "model": "Random Forest",
+        "accuracy": 0.27062154162913393,
+        "f1_macro": 0.24462498665236504,
+        "f1_weighted": 0.2587927342292563,
+        "precision_macro": 0.24970885994561343,
+        "recall_macro": 0.2708118754646757,
+        "train_seconds": 6.18
+      },
+      {
+        "model": "LightGBM",
+        "accuracy": 0.26341526187105907,
+        "f1_macro": 0.24405884060007793,
+        "f1_weighted": 0.2612836689412826,
+        "precision_macro": 0.24228013265953185,
+        "recall_macro": 0.2532152588076851,
+        "train_seconds": 12.96
+      },
+      {
+        "model": "Logistic Regression",
+        "accuracy": 0.26817655385407285,
+        "f1_macro": 0.24088610564623975,
+        "f1_weighted": 0.25058868229470027,
+        "precision_macro": 0.25498935589759214,
+        "recall_macro": 0.2762063225558167,
+        "train_seconds": 0.8
+      },
+      {
+        "model": "XGBoost",
+        "accuracy": 0.2936559001415519,
+        "f1_macro": 0.22389573017492465,
+        "f1_weighted": 0.26300860924090574,
+        "precision_macro": 0.23380199193975115,
+        "recall_macro": 0.23925901583844394,
+        "train_seconds": 17.72
+      },
+      {
+        "model": "Baseline (most frequent)",
+        "accuracy": 0.2932698494402265,
+        "f1_macro": 0.09070646766169155,
+        "f1_weighted": 0.13300736057199525,
+        "precision_macro": 0.0586539698880453,
+        "recall_macro": 0.2,
+        "train_seconds": 0.28
+      }
+    ],
+    "top_features": [
+      {
+        "feature": "Rating",
+        "importance": 0.052705287022624774,
+        "std": 0.005707429595690028
+      },
+      {
+        "feature": "Continent",
+        "importance": 0.009671204038480328,
+        "std": 0.0010004065398755886
+      },
+      {
+        "feature": "AttractionAvgRating",
+        "importance": 0.007667356471368893,
+        "std": 0.001354552708743042
+      },
+      {
+        "feature": "AttractionRatingStd",
+        "importance": 0.004384602466741642,
+        "std": 0.0020519855608738414
+      },
+      {
+        "feature": "CountryAvgRating",
+        "importance": 0.0037015963445701703,
+        "std": 0.0015882710712531208
+      },
+      {
+        "feature": "Region",
+        "importance": 0.0035999390554534993,
+        "std": 0.0012781278907142593
+      },
+      {
+        "feature": "MonthsSinceFirstVisit",
+        "importance": 0.003047891056271688,
+        "std": 0.0014844770827467074
+      },
+      {
+        "feature": "Country",
+        "importance": 0.0025581427120652256,
+        "std": 0.0018216155974368825
+      },
+      {
+        "feature": "UserAvgRating",
+        "importance": 0.0023613216709285345,
+        "std": 0.0021121649825577215
+      },
+      {
+        "feature": "AttractionTypeAvgRating",
+        "importance": 0.002253764563752906,
+        "std": 0.0017973723151220179
+      },
+      {
+        "feature": "Season",
+        "importance": 0.0016068951337298205,
+        "std": 0.0008156181909774604
+      },
+      {
+        "feature": "VisitMonth",
+        "importance": 0.0011892627566640241,
+        "std": 0.0013956608383057247
+      },
+      {
+        "feature": "AttractionVisitCount",
+        "importance": 0.0007612552859044738,
+        "std": 0.001084411368748506
+      },
+      {
+        "feature": "UserVisitCount",
+        "importance": 0.0006647295622343637,
+        "std": 0.0022234638315709668
+      },
+      {
+        "feature": "UserAttractionTypeAffinity",
+        "importance": 0.0005544259306074495,
+        "std": 0.0021910143176438295
+      },
+      {
+        "feature": "VisitYear",
+        "importance": 0.00037549640665623013,
+        "std": 0.00018586956821269087
+      },
+      {
+        "feature": "CityName",
+        "importance": 0.0002877486203038404,
+        "std": 0.0011933615087071808
+      },
+      {
+        "feature": "AttractionType",
+        "importance": 3.083920447679208e-05,
+        "std": 0.0003546322970509232
+      },
+      {
+        "feature": "UserRatingStd",
+        "importance": -0.00043493724158661745,
+        "std": 0.001614434874692856
+      },
+      {
+        "feature": "Attraction",
+        "importance": -0.0013806174779856424,
+        "std": 0.0016828299671046805
+      }
+    ],
+    "model_path": "C:\\Users\\lenovo\\Downloads\\files\\tourism_analytics\\tourism_analytics\\models\\visitmode_classifier.joblib"
+  },
+  "recommendation": {
+    "task": "recommendation",
+    "best_method": "hybrid",
+    "k": 10,
+    "svd_rating_rmse": 0.7766,
+    "comparison": [
+      {
+        "method": "hybrid",
+        "hit_rate@10": 0.1855,
+        "precision@10": 0.0186,
+        "recall@10": 0.1855,
+        "map@10": 0.0834,
+        "ndcg@10": 0.1072,
+        "users_evaluated": 2000
+      },
+      {
+        "method": "content",
+        "hit_rate@10": 0.1895,
+        "precision@10": 0.019,
+        "recall@10": 0.1895,
+        "map@10": 0.0541,
+        "ndcg@10": 0.085,
+        "users_evaluated": 2000
+      },
+      {
+        "method": "popularity",
+        "hit_rate@10": 0.118,
+        "precision@10": 0.0118,
+        "recall@10": 0.118,
+        "map@10": 0.0521,
+        "ndcg@10": 0.0673,
+        "users_evaluated": 2000
+      },
+      {
+        "method": "collaborative",
+        "hit_rate@10": 0.103,
+        "precision@10": 0.0103,
+        "recall@10": 0.103,
+        "map@10": 0.0438,
+        "ndcg@10": 0.0575,
+        "users_evaluated": 2000
+      },
+      {
+        "method": "svd",
+        "hit_rate@10": 0.085,
+        "precision@10": 0.0085,
+        "recall@10": 0.085,
+        "map@10": 0.0291,
+        "ndcg@10": 0.042,
+        "users_evaluated": 2000
+      }
+    ],
+    "n_users": 2971,
+    "n_items": 350,
+    "n_train_interactions": 35950,
+    "n_holdout_users": 2000,
+    "model_path": "C:\\Users\\lenovo\\Downloads\\files\\tourism_analytics\\tourism_analytics\\models\\recommender.joblib"
+  }
+}
