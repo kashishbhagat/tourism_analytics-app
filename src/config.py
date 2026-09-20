@@ -21,6 +21,8 @@ FIGURE_DIR = REPORT_DIR / "figures"
 SQL_DIR = PROJECT_ROOT / "sql"
 
 for _d in (RAW_DIR, PROCESSED_DIR, MODEL_DIR, REPORT_DIR, FIGURE_DIR):
+    if _d.exists() and not _d.is_dir():
+        raise RuntimeError(f"Expected directory but found a file: {_d}")
     _d.mkdir(parents=True, exist_ok=True)
 
 # Key artefacts
