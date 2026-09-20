@@ -1,0 +1,134 @@
+CityId,CityName,CountryId
+1,Dar es Salaam,1
+2,Lyon,1
+3,Surabaya,2
+4,Paris,2
+5,Sydney,2
+6,Penang,3
+7,Athens,3
+8,Dubai,4
+9,Brussels,4
+10,Shanghai,5
+11,Lisbon,5
+12,Tel Aviv,5
+13,London,6
+14,Barcelona,6
+15,Nairobi,7
+16,Panama City,8
+17,Oslo,8
+18,Jakarta,8
+19,Lagos,9
+20,Istanbul,9
+21,Havana,10
+22,Buenos Aires,10
+23, Lahore  ,11
+24,Phuket,11
+25,Chicago,12
+26,Osaka,12
+27,cairo,13
+28,Riyadh,14
+29,Port Moresby,14
+30,Dakar,15
+31,Mumbai,15
+32,SANTO DOMINGO,15
+33,Singapore,16
+34,Toronto,17
+35, Bandung  ,17
+36,Gaborone,18
+37,Stockholm,19
+38,Melbourne,19
+39,Addis Ababa,20
+40,Tunis,20
+41,Tokyo,21
+42,cape town,21
+43,Rio de Janeiro,21
+44,Amsterdam,22
+45,Los Angeles,23
+46,Taipei,24
+47,auckland,24
+48,San Jose,25
+49,Kathmandu,25
+50,Guatemala City,25
+51,Warsaw,26
+52,Manila,26
+53,Munich,26
+54,sao paulo,27
+55,Marrakesh,28
+56,Dhaka,29
+57,Copenhagen,29
+58,bucharest,29
+59,Prague,30
+60,Wellington,31
+61,Kampala,31
+62,Kuala Lumpur,31
+63,Rome,32
+64,Berlin,33
+65,Kingston,33
+66,Johannesburg,33
+67,Mexico City,34
+68,New York,35
+69,Bangkok,35
+70,Suva,36
+71,Delhi,36
+72,Accra,37
+73,Manchester,38
+74,Seoul,38
+75,Beijing,39
+76,Milan,39
+77,Lima,40
+78,Budapest,40
+79,Bengaluru,40
+80,Vancouver,41
+81,Colombo,41
+82,Chennai,41
+83,Bogota,42
+84,Madrid,42
+85,Santiago,43
+86,Windhoek,43
+87,HANOI,44
+88,Dar es Salaam,44
+89,Lyon,45
+90, Surabaya  ,45
+91,Paris,46
+92,Sydney,46
+93,Penang,46
+94,Athens,47
+95,Dubai,48
+96,Brussels,49
+97,SHANGHAI,49
+98,Lisbon,50
+99,TEL AVIV,51
+100,London,52
+101,Barcelona,53
+102,Nairobi,53
+103,Panama City,53
+104,Oslo,54
+105,Jakarta,54
+106,Lagos,54
+107,Istanbul,55
+108,Havana,55
+109,Buenos Aires,55
+110,Lahore,56
+111,Phuket,56
+112,Chicago,57
+113,Osaka,57
+114,Cairo,57
+115,Riyadh,58
+116,Port Moresby,59
+117,Dakar,59
+118,mumbai,59
+119, Santo Domingo  ,60
+120,Singapore,60
+121,Toronto,61
+122,Bandung,61
+123,Gaborone,61
+124,Stockholm,62
+125,MELBOURNE,63
+126,Addis Ababa,63
+127,Tunis,64
+128,Tokyo,64
+129,Cape Town,64
+130,Rio de Janeiro,65
+131,Amsterdam,65
+132,Los Angeles,66
+133,Taipei,66
